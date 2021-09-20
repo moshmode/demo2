@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mosh.demo2.dao.UserBucketDao">
+
+    <resultMap type="com.mosh.demo2.entity.UserBucket" id="UserBucketMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="privateBucket" column="private_bucket" jdbcType="VARCHAR"/>
+        <result property="groupBucket" column="group_bucket" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserBucketMap">
+        select
+          id, user_id, private_bucket, group_bucket
+        from my_web_data.user_bucket
+        where id = #{id}
+    </select>
+
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from my_web_data.user_bucket
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="privateBucket != null and privateBucket != ''">
+                and private_bucket = #{privateBucket}
+            </if>
+            <if test="groupBucket != null and groupBucket != ''">
+                and group_bucket = #{groupBucket}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into my_web_data.user_bucket(user_id, private_bucket, group_bucket)
+        values (#{userId}, #{privateBucket}, #{groupBucket})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into my_web_data.user_bucket(user_id, private_bucket, group_bucket)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.userId}, #{entity.privateBucket}, #{entity.groupBucket})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into my_web_data.user_bucket(user_id, private_bucket, group_bucket)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.privateBucket}, #{entity.groupBucket})
+        </foreach>
+        on duplicate key update
+        user_id = values(user_id),
+        private_bucket = values(private_bucket),
+        group_bucket = values(group_bucket)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update my_web_data.user_bucket
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="privateBucket != null and privateBucket != ''">
+                private_bucket = #{privateBucket},
+            </if>
+            <if test="groupBucket != null and groupBucket != ''">
+                group_bucket = #{groupBucket},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from my_web_data.user_bucket where id = #{id}
+    </delete>
+
+</mapper>
+
