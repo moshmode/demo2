@@ -23,7 +23,9 @@ public class User {
 
     private String email;
 
-    public String getToken() {
+    private Integer right;
+
+    public String userToken() {
         return JWT.create().withAudience(String.valueOf(this.id)).sign(Algorithm.HMAC256(this.password));
     }
 

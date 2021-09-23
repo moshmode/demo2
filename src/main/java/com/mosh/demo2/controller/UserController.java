@@ -3,12 +3,13 @@ package com.mosh.demo2.controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.mosh.demo2.annotation.UserLoginToken;
+import com.mosh.demo2.entity.Menu.MulMenu;
 import com.mosh.demo2.entity.User;
 import com.mosh.demo2.service.UserService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (User)表控制层
@@ -25,9 +26,13 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private List<MulMenu> admin;
+
 
     //登录
     @PostMapping("/login")
+
     public String login(User user) {
         JsonObject jsonObject = new JsonObject();
         Gson gson = new Gson();
@@ -42,7 +47,7 @@ public class UserController {
             return gson.toJson(jsonObject);
         }
 
-        String token = userForBase.getToken();
+        String token = userForBase.userToken();
         jsonObject.addProperty("token", token);
         jsonObject.add("user", gson.toJsonTree(userForBase));
         return gson.toJson(jsonObject);
@@ -51,9 +56,38 @@ public class UserController {
     }
 
     @UserLoginToken
-    @GetMapping("/getMessage")
-    public String getMessage() {
-        return "你已通过验证";
+    @GetMapping("/menu")
+    public List<MulMenu> getMenu() {
+        return admin;
     }
+
+    @UserLoginToken
+    @GetMapping("/add")
+    public String addUser(User user) {
+        if (user.getRight() == null || user.getRight() > 1 || user.getRight() < 0) {
+            user.setRight(1);
+        }
+        try {
+            userService.insert(user);
+        } catch (Exception e) {
+            return "failure";
+        }
+        return "success";
+    }
+
+    @UserLoginToken
+    @GetMapping("/list")
+    public List<User> userList(@RequestParam("pageNow") Integer pageNow,
+                               @RequestParam("pageSize") Integer pageSize) {
+        List<User> users;
+        try {
+            users = userService.queryByPage(pageNow, pageSize);
+        } catch (Exception e) {
+            return null;
+        }
+        return users;
+    }
+
+
 }
 
