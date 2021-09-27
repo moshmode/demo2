@@ -1,4 +1,4 @@
-package com.mosh.demo2.entity.Menu;
+package com.mosh.demo2.entity.right;
 
 import lombok.*;
 
@@ -12,25 +12,24 @@ import java.util.List;
  * @date 2021/9/21 10:05
  */
 
-@ToString
-public class FinalMenu extends Menu {
+public class FinalRight extends Right {
 
-    public FinalMenu(Integer id, String name, String path) {
+    public FinalRight(Integer id, String name, String path) {
         super(id, name, path);
     }
 
     @Override
-    public void addChildren(Menu menu) throws OperationNotSupportedException {
+    public void addChildren(Right right) throws OperationNotSupportedException {
         throw new OperationNotSupportedException();
     }
 
     @Override
-    public void deleteChildren(Menu menu) throws OperationNotSupportedException {
+    public void deleteChildren(Right right) throws OperationNotSupportedException {
         throw new OperationNotSupportedException();
     }
 
     @Override
-    public List<Menu> getChildren() {
+    public List<Right> getChildren() {
         return null;
     }
 

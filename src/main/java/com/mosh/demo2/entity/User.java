@@ -4,8 +4,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
  * (User)实体类
  *
@@ -23,7 +21,7 @@ public class User {
 
     private String email;
 
-    private Integer right;
+    private Integer role;
 
     public String userToken() {
         return JWT.create().withAudience(String.valueOf(this.id)).sign(Algorithm.HMAC256(this.password));

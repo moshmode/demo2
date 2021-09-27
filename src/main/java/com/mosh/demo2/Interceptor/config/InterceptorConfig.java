@@ -1,5 +1,6 @@
 package com.mosh.demo2.Interceptor.config;
 
+import com.mosh.demo2.Interceptor.AdminInterceptor;
 import com.mosh.demo2.Interceptor.AuthenticationInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +21,18 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(authenticationInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/user/login");
+        registry.addInterceptor(adminInterceptor())
+                .addPathPatterns("/**");
     }
+
     @Bean
     public AuthenticationInterceptor authenticationInterceptor() {
         return new AuthenticationInterceptor();
+    }
+
+    @Bean
+    public AdminInterceptor adminInterceptor() {
+        return new AdminInterceptor();
     }
 
 }

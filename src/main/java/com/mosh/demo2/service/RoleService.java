@@ -1,17 +1,17 @@
 package com.mosh.demo2.service;
 
-import com.mosh.demo2.entity.UserBucket;
-import org.springframework.stereotype.Service;
+import com.mosh.demo2.entity.Role;
+
+import java.util.List;
 
 
 /**
- * (UserBucket)表服务接口
+ * (Role)表服务接口
  *
  * @author makejava
- * @since 2021-09-09 12:31:09
+ * @since 2021-09-24 21:32:28
  */
-@Service
-public interface UserBucketService {
+public interface RoleService {
 
     /**
      * 通过ID查询单条数据
@@ -19,24 +19,31 @@ public interface UserBucketService {
      * @param id 主键
      * @return 实例对象
      */
-    UserBucket queryById(Integer id);
+    Role queryById(Integer id);
+
+    /**
+     * select all
+     *
+     * @return 实例对象
+     */
+    List<Role> queryAll();
 
 
     /**
      * 新增数据
      *
-     * @param userBucket 实例对象
+     * @param name 实例对象名字
      * @return 实例对象
      */
-    UserBucket insert(UserBucket userBucket);
+    int insert(String name);
 
     /**
      * 修改数据
      *
-     * @param userBucket 实例对象
+     * @param role 实例对象
      * @return 实例对象
      */
-    UserBucket update(UserBucket userBucket);
+    Role update(Role role);
 
     /**
      * 通过主键删除数据

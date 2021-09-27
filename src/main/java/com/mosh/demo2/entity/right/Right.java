@@ -1,9 +1,8 @@
-package com.mosh.demo2.entity.Menu;
+package com.mosh.demo2.entity.right;
 
 import lombok.*;
 
 import javax.naming.OperationNotSupportedException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +13,9 @@ import java.util.List;
  */
 @Getter
 @Setter
-public abstract class Menu {
+@ToString
+@NoArgsConstructor
+public abstract class Right {
 
     Integer id;
 
@@ -22,7 +23,7 @@ public abstract class Menu {
 
     String path;
 
-    public Menu(Integer id, String name, String path) {
+    public Right(Integer id, String name, String path) {
         this.id = id;
         this.name = name;
         this.path = path;
@@ -32,10 +33,10 @@ public abstract class Menu {
         this.path = from + "/" + path;
     }
 
-    public abstract void addChildren(Menu menu) throws OperationNotSupportedException;
+    public abstract void addChildren(Right right) throws OperationNotSupportedException;
 
-    public abstract void deleteChildren(Menu menu) throws OperationNotSupportedException;
+    public abstract void deleteChildren(Right right) throws OperationNotSupportedException;
 
-    public abstract List<Menu> getChildren();
+    public abstract List<Right> getChildren();
 
 }

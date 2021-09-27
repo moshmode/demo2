@@ -1,18 +1,18 @@
 package com.mosh.demo2.dao;
 
-import com.mosh.demo2.entity.UserBucket;
+import com.mosh.demo2.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * (UserBucket)表数据库访问层
+ * (Role)表数据库访问层
  *
  * @author makejava
- * @since 2021-09-09 12:31:08
+ * @since 2021-09-24 21:32:24
  */
 @Mapper
-public interface UserBucketDao {
+public interface RoleDao {
 
     /**
      * 通过ID查询单条数据
@@ -20,48 +20,56 @@ public interface UserBucketDao {
      * @param id 主键
      * @return 实例对象
      */
-    UserBucket queryById(Integer id);
+    Role queryById(Integer id);
+
+    /**
+     * select all
+     *
+     * @return 实例对象
+     */
+    List<Role> queryAll();
+
 
     /**
      * 统计总行数
      *
-     * @param userBucket 查询条件
+     * @param role 查询条件
      * @return 总行数
      */
-    long count(UserBucket userBucket);
+    long count(Role role);
 
     /**
      * 新增数据
      *
-     * @param userBucket 实例对象
+     * @param name 实例对象
      * @return 影响行数
      */
-    int insert(UserBucket userBucket);
+    int insert(String name);
 
     /**
      * 批量新增数据（MyBatis原生foreach方法）
      *
-     * @param entities List<UserBucket> 实例对象列表
+     * @param entities List<Role> 实例对象列表
      * @return 影响行数
      */
-    int insertBatch(@Param("entities") List<UserBucket> entities);
+    int insertBatch(@Param("entities") List<Role> entities);
 
     /**
      * 批量新增或按主键更新数据（MyBatis原生foreach方法）
      *
-     * @param entities List<UserBucket> 实例对象列表
+     * @param entities List<Role> 实例对象列表
      * @return 影响行数
      * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
      */
-    int insertOrUpdateBatch(@Param("entities") List<UserBucket> entities);
+    int insertOrUpdateBatch(@Param("entities") List<Role> entities);
 
     /**
      * 修改数据
      *
-     * @param userBucket 实例对象
+     * @param role 实例对象
      * @return 影响行数
      */
-    int update(UserBucket userBucket);
+    int update(Role role);
 
     /**
      * 通过主键删除数据

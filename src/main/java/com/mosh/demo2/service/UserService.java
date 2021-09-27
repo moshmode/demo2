@@ -31,10 +31,18 @@ public interface UserService {
      */
     User queryByName(String name);
 
+
+    /**
+     * @param user 条件参数
+     *
+     * @return 用户数量
+     */
+    long count(User user);
+
     /**
      * 查询多条记录
      *
-     * @param pageNow 当前页
+     * @param pageNow  当前页
      * @param pageSize 页大小
      * @return 实例集合
      */
@@ -63,5 +71,13 @@ public interface UserService {
      * @return 是否成功
      */
     boolean deleteById(Integer id);
+
+    /**
+     * 通过主键删除数据
+     *
+     * @param name 主键
+     * @return 是否成功
+     */
+    boolean deleteByName(String name);
 
 }

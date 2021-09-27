@@ -4,6 +4,7 @@ import com.mosh.demo2.entity.User;
 import com.mosh.demo2.dao.UserDao;
 import com.mosh.demo2.service.UserService;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -40,16 +41,21 @@ public class UserServiceImpl implements UserService {
         return this.userDao.queryByName(name);
     }
 
+    @Override
+    public long count(User user) {
+        return userDao.count(user);
+    }
+
     /**
      * 查询多条记录
      *
-     * @param pageNow 当前页
+     * @param pageNow  当前页
      * @param pageSize 页大小
      * @return 实例集合
      */
     @Override
     public List<User> queryByPage(Integer pageNow, Integer pageSize) {
-        return userDao.queryByPage(pageNow, pageSize);
+        return userDao.queryByPage((pageNow - 1) * pageSize, pageSize);
     }
 
     /**
@@ -85,5 +91,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteById(Integer id) {
         return this.userDao.deleteById(id) > 0;
+    }
+
+    /**
+     * 通过主键删除数据
+     *
+     * @param name 主键
+     * @return 是否成功
+     */
+    @Override
+    public boolean deleteByName(String name) {
+        return this.userDao.deleteByName(name) > 0;
     }
 }
